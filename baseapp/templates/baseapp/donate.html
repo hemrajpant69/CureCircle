@@ -3,10 +3,11 @@
 
 {% block style %}
 
-<link href="{% static '/css/style4.css'%}" rel="stylesheet">
-
+<link href="{% static '/css/style.css'%}" rel="stylesheet">
 
 {% endblock style %}
+
+
 
 {% block content %}
 
@@ -14,42 +15,81 @@
 
     <form action="{% url 'donatelanding_page' %}" method="post">
         {% csrf_token %}
-        <div class="section">
-            <h2 class="section-title">Billing Address</h2>
-
-            <div class="input-box">
-                <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Anish Joshi" required>
-            </div>
-            <div class="input-box">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="example@example.com" required>
-            </div>
-            <div class="input-box">
-                <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" placeholder="9806400774" required>
-            </div>
-
-            <div class="input-box">
-                <label for="blood">Blood Group:</label>
-                <input type="text" id="blood" name="blood" placeholder="A Positive" required>
-            </div>
-
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Payment</h2>
-            <img src="{% static '/images/card_img.png'%}" alt="" class="img-fluid1">
-
+        <div class="container1">
+        
+                <div class="section">
+                    <h2 class="section-title">Billing Address</h2>
+                    <div class="input-box">
+                      <label for="fullName">Full Name:</label>
+                      <input type="text" id="fullName" name="fullName" placeholder="Anish Joshi" required
+                          oninput="saveFullNameToLocalStorage()">
+                  </div>
+                  
+                  <script>
+                      function saveFullNameToLocalStorage() {
+                          const fullNameInput = document.getElementById("fullName");
+                          const fullNameValue = fullNameInput.value;
+                  
+                          // Save the full name to localStorage
+                          localStorage.setItem("fullName", fullNameValue);
+                      }
+                  </script>
+                  
+                    <div class="input-box">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="example@example.com" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" name="phone" placeholder="9806400774" required>
+                    </div>
+        
+                    <div class="input-box">
+                        <label for="blood">Blood Group:</label>
+                        <input type="text" id="blood" name="blood" placeholder="A Positive" required>
+                    </div>
+        
+        
+                    <div class="input-box">
+                      <label for="amount">Amount:</label>
+                      <input type="text" id="amount" name="amount" placeholder="Rs.1000" required
+                          oninput="saveAmountToLocalStorage()">
+                  </div>
+                  
+                  <script>
+                      function saveAmountToLocalStorage() {
+                          const amountInput = document.getElementById("amount");
+                          const amountValue = amountInput.value;
+                  
+                          // Save the amount to localStorage
+                          localStorage.setItem("amount", amountValue);
+                      }
+                  </script>
+                  
+        
+                  <div class="input-box">
+                    <label for="transactionCode">Transaction Code:</label>
+                    <input type="text" id="transactionCode" name="transactionCode" placeholder="q4r791stnx1" required>
+                </div>
+        
+                </div>
+        
+                <div class="section">
+                    <h2 class="section-title">Payment</h2>
+                    <img src="{% static '/images/scanner.jpg'%}" alt="" class="img-fluid1">
+        
+                    
+                </div>
+        
+                <button type="submit" class="submit-btn">Pay Via Mobile Banking</button>
+        
+                
+        
+            </form>
+        
             
+        
         </div>
-
-        <button type="submit" class="submit-btn">Pay Via Khalti</button>
-
-    </form>
-
-</div>
-
 {% endblock content%}
 
 {% block js %}

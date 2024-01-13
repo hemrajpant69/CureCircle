@@ -58,21 +58,28 @@
 
     <div class="column1">
         <h2>Doctor Details</h2>
-
         <label for="doctorName">Doctor's Name:</label>
-            <input type="text" id="doctorName" name="doctorName" required>
+        <select name="doctorName" id="doctorName">
+            {% for doctor in doctors %}
+                <option value="{{ doctor.name }}">{{ doctor.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="specialization">Specialization:</label>
+        <select name="specialization" id="specialization">
+            {% for doctor in doctors %}
+                <option value="{{doctor.specialization}}">{{doctor.specialization}}</option>
+            {% endfor %}
+        </select>
 
-            <label for="specialization">Specialization:</label>
-            <input type="text" id="specialization" name="specialization" required>
-
-            <label for="hospitalName">Hospital Name:</label>
+            {% comment %} <label for="hospitalName">Hospital Name:</label>
             <input type="text" id="hospitalName" name="hospitalName" required>
 
             <label for="contactDoctor">Contact Number (Doctor):</label>
             <input type="tel" id="contactDoctor" name="contactDoctor" required>
 
             <label for="emailDoctor">Email (Doctor):</label>
-            <input type="email" id="emailDoctor" name="emailDoctor" required>
+            <input type="email" id="emailDoctor" name="emailDoctor" required> {% endcomment %}
 
             
             <p>(All the information must be correct and proper) </p>

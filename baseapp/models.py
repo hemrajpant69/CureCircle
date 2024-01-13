@@ -52,9 +52,11 @@ class Patient(models.Model):
     gender=models.CharField(max_length=6, choices=GENDER, blank=False, default=None)
     doctor=models.ForeignKey(Doctor, on_delete=models.PROTECT)
     drecommend=models.FileField(upload_to='drecommend/' ,max_length=50, blank=False, null=True)
-    wredommend=models.FileField(upload_to='wrecommend', max_length=50, blank=False, null=True)
+    wrecommend=models.FileField(upload_to='wrecommend', max_length=50, blank=False, null=True)
     fundamount=models.PositiveIntegerField(blank=False, null=True)
     bloodgroup=models.CharField(max_length=20, blank=False, default="Don't know")
+    healthissue=models.CharField(max_length=50, blank=False, default=None)
+    hospitalization_condition=models.CharField(max_length=50, blank=False, default=None)
     # bloodgroup=models.CharField(max_length=20, choices=GROUP, unique=True)
     # bloodgroup=models.ForeignKey(BloodGroup, null=True, on_delete=models.PROTECT)
 

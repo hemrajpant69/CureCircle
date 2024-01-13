@@ -60,28 +60,24 @@
         <h2>Doctor Details</h2>
         <label for="doctorName">Doctor's Name:</label>
         <select name="doctorName" id="doctorName">
-            {% for doctor in doctors %}
-                <option value="{{ doctor.name }}">{{ doctor.name }}</option>
-            {% endfor %}
+            {% comment %} {% for doctor in doctor_info %} {% endcomment %}
+                <option value="Anish Joshi">Anish Joshi</option>
+                <option value="Hemraj Pant">Hemraj Pant</option>
+                <option value="Nabin Prasad Dhungana">Nabin Prasad Dhungana</option>
+                <option value="Surya Pokhrel">Surya Pokhrel</option>
+            {% comment %} {% endfor %} {% endcomment %}
         </select>
         
         <label for="specialization">Specialization:</label>
         <select name="specialization" id="specialization">
-            {% for doctor in doctors %}
-                <option value="{{doctor.specialization}}">{{doctor.specialization}}</option>
-            {% endfor %}
+            {% comment %} {% for doctor in doctor_info %} {% endcomment %}
+                <option value="Brain and Nervous system">Brain and Nervous system</option>
+                <option value="Gynuo">Gynuo</option>
+                <option value="Heart specialist">Heart specialist</option>
+                <option value="Bone specialist">Bone specialist</option>
+            {% comment %} {% endfor %} {% endcomment %}
         </select>
 
-            {% comment %} <label for="hospitalName">Hospital Name:</label>
-            <input type="text" id="hospitalName" name="hospitalName" required>
-
-            <label for="contactDoctor">Contact Number (Doctor):</label>
-            <input type="tel" id="contactDoctor" name="contactDoctor" required>
-
-            <label for="emailDoctor">Email (Doctor):</label>
-            <input type="email" id="emailDoctor" name="emailDoctor" required> {% endcomment %}
-
-            
             <p>(All the information must be correct and proper) </p>
             <button type="submit">Submit</button>
         </form>

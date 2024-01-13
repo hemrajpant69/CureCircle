@@ -71,12 +71,12 @@ def requestlanding(request):
             doctors=Doctor.objects.all()
 
             doctor_info = [{'name': doctor.name, 'specialization': doctor.specialization} for doctor in doctors]
-            
+
             patients=Patient.objects.create(doctor=doctor_info, name=p_name, age=p_age, gender=p_gender, phone=p_phone, email=p_email, bloodgroup=p_bloodgroup,  healthissue=p_healthissue, hospitalization_condition=p_hospitalcondition, fundamount=p_fundamount, drecommend=p_drecommend, wrecommend=p_wrecommend)
 
             patients.save()
 
-            return redirect('requestlanding')
+            return render(request, 'baseapp/requestlanding.html', {'doctor_info': doctor_info})
 
         else:
             return render(request, 'baseapp/requestfund.html')

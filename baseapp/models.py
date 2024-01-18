@@ -22,7 +22,8 @@ class Donor(models.Model):
     name=models.CharField(max_length=50)
     email=models.EmailField(max_length=50)
     phone=models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)])
-
+    bloodgroup=models.CharField(max_length=20, blank=False, default="Don't know")
+    amount=models.PositiveBigIntegerField(default=0, null=True, blank=False)
     def __str__(self):
         return self.name
 
@@ -32,7 +33,7 @@ class Doctor(models.Model):
     name=models.CharField(max_length=50,blank=False)
     email=models.EmailField(max_length=50, blank=False)
     phone=models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)],blank=False)
-    hospital=models.CharField(max_length=50,blank=False)
+    hospital=models.CharField(max_length=50,blank=False, null=True)
     specialization=models.CharField(max_length=50, blank=False, null=True)
 
     def __str__(self):
@@ -51,12 +52,12 @@ class Patient(models.Model):
     age=models.PositiveIntegerField(blank=False, null=True, default=0)
     gender=models.CharField(max_length=6, choices=GENDER, blank=False, default=None)
     doctor=models.ForeignKey(Doctor, on_delete=models.PROTECT)
-    drecommend=models.FileField(upload_to='drecommend/' ,max_length=50, blank=False, null=True)
+    drecommend=models.FileField(upload_to='drecommend' ,max_length=50, blank=False, null=True)
     wrecommend=models.FileField(upload_to='wrecommend', max_length=50, blank=False, null=True)
     fundamount=models.PositiveIntegerField(blank=False, null=True)
     bloodgroup=models.CharField(max_length=20, blank=False, default="Don't know")
-    healthissue=models.CharField(max_length=50, blank=False, default=None)
-    hospitalization_condition=models.CharField(max_length=50, blank=False, default=None)
+    healthissue=models.TextField(blank=False, default=None)
+    hospitalization_condition=models.TextField(blank=False, default=None)
     # bloodgroup=models.CharField(max_length=20, choices=GROUP, unique=True)
     # bloodgroup=models.ForeignKey(BloodGroup, null=True, on_delete=models.PROTECT)
 

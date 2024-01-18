@@ -3,18 +3,21 @@
 {% block style %}
 
 {% endblock style %}
+{% block content %}
 
-    <main>
-        <section id="shoutoutSection">
-            <h2>Don't worry. If there is a will, there is a way.</h2>
-            <p id="shoutoutContent"></p>
-        </section>
-
-        <!-- Other sections without dummy content for brevity -->
-    </main>
+<main>
+    <section id="shoutoutSection">
+        <br><br><br><br>
+        <h2>Don't worry. If there is a will, there is a way.</h2>
+        <p id="shoutoutContent"></p>
+    </section>
+    
+    <!-- Other sections without dummy content for brevity -->
+</main>
+{% endblock content %}
 
 {% block js %}
     
-    <script src="{% static '/js/script.js'%}"></script>
+    {% comment %} <script src="{% static '/js/script.js'%}"></script> {% endcomment %}
 
 {% endblock js %}

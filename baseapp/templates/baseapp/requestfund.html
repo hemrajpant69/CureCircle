@@ -28,7 +28,7 @@
             </select>
 
             <label for="contactNumber">Contact Number:</label>
-            <input type="number" length="10" id="contactNumber" name="contactPatient" required>
+            <input type="tel" pattern="(?:\(?\+977\)?)?[9][6-9]\d{8}|01[-]?[0-9]{7}" id="contactNumber" name="contactPatient" required>
             
             <label for="email">Email:</label>
             <input type="email" id="email" name="emailPatient" required>
@@ -45,6 +45,9 @@
             <label for="fundAmount">Amount of Funds Needed:</label>
             <input type="number" id="fundAmount" name="fundAmount" required>
 
+            <label for="media">Upload patient's current image :</label>
+        <input type="file" id="media" name="picture" accept="image/*,video/*,pdf/*">
+
             <label for="media">Upload doctor's recommendation:</label>
         <input type="file" id="media" name="drecommend" accept="image/*,video/*,pdf/*">
 
@@ -58,15 +61,17 @@
         <h2>Doctor Details</h2>
         <label for="doctorName">Doctor's Name:</label>
         <input type="text" id="doctorName" name="doctorName" required>
-        {% comment %} <select name="doctorName" id="doctorName">
-            {% for doctor in doctor_info %} 
-                <option value="Anish Joshi">Anish Joshi</option>
-                <option value="Hemraj Pant">Hemraj Pant</option>
+
+
+        <select name="doctorName" id="doctorName">
+            {% for doctor in doctors %} 
+                <option value="{{doctor.id}}">{{ doctor.name}}</option>
+                {% comment %} <option value="Hemraj Pant"> {{ doctor.}}t</option>
                 <option value="Nabin Prasad Dhungana">Nabin Prasad Dhungana</option>
-                <option value="Surya Pokhrel">Surya Pokhrel</option>
+                <option value="Surya Pokhrel">Surya Pokhrel</option> {% endcomment %}
             {% endfor %}
         </select>
-         {% endcomment %}
+        
 
 
         <label for="specialization">Specialization:</label>
@@ -87,7 +92,7 @@
         <input type="text" id="hospital" name="hospital" required>
 
         <label for="contactNumber">Contact Number:</label>
-        <input type="tel" id="contactNumber" name="contactDoctor" required>
+        <input type="tel" pattern="(?:\(?\+977\)?)?[9][6-9]\d{8}|01[-]?[0-9]{7}" id="contactNumber" name="contactDoctor" required>
 
 
             <p>(All the information must be correct and proper) </p>

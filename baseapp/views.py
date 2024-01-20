@@ -17,7 +17,10 @@ def donate(request):
     return render(request, 'baseapp/donate.html')
 
 def requestfund(request):
-    return render(request, 'baseapp/requestfund.html')
+    doctors = Doctor.objects.all()
+    return render(request, 'baseapp/requestfund.html', {
+        "doctors": doctors
+        })
 
 def about(request):
     return render(request,'baseapp/about.html')
@@ -33,8 +36,9 @@ def requestlanding(request):
             p_healthissue=request.POST.get('healthissue')
             p_hospitalcondition=request.POST.get('hospitalCondition')
             p_fundamount=request.POST.get('fundAmount')
-            p_drecommend=request.POST.get('drecommend')
-            p_wrecommend=request.POST.get('wrecommend')
+            p_picture = request.FILES.get('picture')
+            p_drecommend=request.FILES.get('drecommend')
+            p_wrecommend=request.FILES.get('wrecommend')
 
             d_name=request.POST.get('doctorName')
             d_hospitalname=request.POST.get('hospital')
@@ -47,7 +51,7 @@ def requestlanding(request):
             if created:
                  doctor.save()
 
-            patient=Patient.objects.create(doctor=doctor, name= p_name, email= p_email, phone= p_phone, age= p_age, gender= p_gender, drecommend= p_drecommend, wrecommend= p_wrecommend, fundamount= p_fundamount, bloodgroup= p_bloodgroup, healthissue= p_healthissue, hospitalization_condition= p_hospitalcondition)
+            patient=Patient.objects.create(picture = p_picture, doctor=doctor, name= p_name, email= p_email, phone= p_phone, age= p_age, gender= p_gender, drecommend= p_drecommend, wrecommend= p_wrecommend, fundamount= p_fundamount, bloodgroup= p_bloodgroup, healthissue= p_healthissue, hospitalization_condition= p_hospitalcondition)
 
             patient.save()
 

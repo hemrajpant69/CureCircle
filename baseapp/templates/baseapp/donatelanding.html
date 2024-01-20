@@ -45,7 +45,7 @@
 
 <main>
     <section id="shoutoutSection">
-        <h2>{{donordata.name}}, You're Making It Happen with {{donordata.amount}}.</h2>
+        <h2>{{donordata.name}}, You're Making It Happen with Rs. {{donordata.amount}}.</h2>
         <p id="shoutoutContent"></p>
     </section>
     
@@ -55,6 +55,6 @@
 {% endblock content %}
 {% block js %}
     
-    <script src="{% static '/js/script.js'%}"></script>
+    {% comment %} <script src="{% static '/js/script.js'%}"></script> {% endcomment %}
 
 {% endblock js %}

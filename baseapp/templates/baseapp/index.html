@@ -18,17 +18,18 @@
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
-
+        <h3><b>Patient Profile:</b></h3>
+        <br>
         {% if patients != None %}
 
         {% for patient in patients  %}
         <div class="row">
           
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-            <img src="{% static '/images/patient-1.jpg' %}" class="img-fluid" alt="...">
+            <img src="{{patient.picture.url}}" class="img-fluid" alt="...">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-            <h3>Patient Profile: {{patient.name}}</h3>
+            <h3> {{patient.name}}</h3>
             <p class="fst-italic">
               {{patient.healthissue}}
               <br>
@@ -109,14 +110,14 @@
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                   <div class="course-item">
                     {% comment %} <img src="{% static '/images/patient-1.jpg' %}" class="img-fluid" alt="..."> {% endcomment %}
-                    <img src="{{ patient.drecommend }}" class="img-fluid" alt="...">
+                    <img src="{{patient.picture.url}}" class="img-fluid" alt="...">
                     <div class="course-content">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4>{{patient.name}}</h4>
                         <p class="price">{{patient.fundamount}}</p>
                       </div>
       
-                      <h3><a href="course-details.html">Donate</a></h3>
+                      {% comment %} <h3><a href="course-details.html">Donate</a></h3> {% endcomment %}
                       <p>{{patient.hospitalization_condition}}
     
                       </p>

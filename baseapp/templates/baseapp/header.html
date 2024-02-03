@@ -9,11 +9,18 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="{% url 'home_page' %}">Home</a></li>
+          <li><a class="" href="{% url 'home_page' %}">Home</a></li>
           <li><a href="{% url 'about_page' %}">About Us</a></li>
           <li><a href="{% url 'contact_page' %}">Contact</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
+          {% comment %} <i class="bi bi-list mobile-nav-toggle"></i> {% endcomment %}
+          
+          
+          {% if request.user.is_staff %}
+          
+          <li><p>Hello {{request.user}} <a href="{% url 'logout_page'%}">Logout</a></p></li>
+            {% endif %}
+          </ul>
       </nav><!-- .navbar -->
     </div>
   </header><!-- End Header -->
+  

@@ -39,42 +39,46 @@
             <label for="hospitalCondition">Hospitalization Condition:</label>
             <textarea id="hospitalCondition" name="hospitalCondition" rows="4" required></textarea>
 
-            <label for="Blood Group">Blood Group:</label>
-            <input type="letter" id="Blood Group" name="bloodgroupPatient" required>
+            <label for="bloodgroup">Blood Group:</label>
+            <select name="bloodgroup" id="bloodgroup">
+
+                {% for group_value, group_label in group %}
+                <option value="{{group_value}}">{{group_label}}</option>
+                
+                {% endfor %}
+            </select>
+                
 
             <label for="fundAmount">Amount of Funds Needed:</label>
             <input type="number" id="fundAmount" name="fundAmount" required>
 
             <label for="media">Upload patient's current image :</label>
-        <input type="file" id="media" name="picture" accept="image/*,video/*,pdf/*">
+        <input type="file" id="media" name="picture" accept="image/*,video/*,pdf/*" required>
 
             <label for="media">Upload doctor's recommendation:</label>
-        <input type="file" id="media" name="drecommend" accept="image/*,video/*,pdf/*">
+        <input type="file" id="media" name="drecommend" accept="image/*,video/*,pdf/*" required>
 
         <label for="media">Upload ward recommendation letter:</label>
-        <input type="file" id="media" name="wrecommend" accept="image/*,video/*,pdf/*">
+        <input type="file" id="media" name="wrecommend" accept="image/*,video/*,pdf/*" required>
 
         
     </div>
 
     <div class="column1">
         <h2>Doctor Details</h2>
-        <label for="doctorName">Doctor's Name:</label>
-        <input type="text" id="doctorName" name="doctorName" required>
+        {% comment %} <label for="doctorName">Doctor's Name:</label>
+        <input type="text" id="doctorName" name="doctorName" required> {% endcomment %}
 
 
         <select name="doctorName" id="doctorName">
             {% for doctor in doctors %} 
-                <option value="{{doctor.id}}">{{ doctor.name}}</option>
-                {% comment %} <option value="Hemraj Pant"> {{ doctor.}}t</option>
-                <option value="Nabin Prasad Dhungana">Nabin Prasad Dhungana</option>
-                <option value="Surya Pokhrel">Surya Pokhrel</option> {% endcomment %}
+                <option value="{{doctor.name}}">{{ doctor.name}} (ID= {{doctor.id}} )</option>
             {% endfor %}
         </select>
         
 
 
-        <label for="specialization">Specialization:</label>
+        {% comment %} <label for="specialization">Specialization:</label>
         <input type="text" name="specialization" id="specialization" required>
         {% comment %} <select name="specialization" id="specialization">
             {% for doctor in doctor_info %}
@@ -84,18 +88,22 @@
                 <option value="Bone specialist">Bone specialist</option>
             {% comment %} {% endfor %} 
         </select>{% endcomment %}
-
+{% comment %} 
         <label for="email">Email:</label>
-        <input type="email" id="emailDoctor" name="emailDoctor" required>
+        <input type="email" id="emailDoctor" name="emailDoctor" required> {% endcomment %}
 
-        <label for="hospital">Hospital:</label>
-        <input type="text" id="hospital" name="hospital" required>
-
+        {% comment %} <label for="hospital">Hospital:</label>
+        <input type="text" id="hospital" name="hospital" required> {% endcomment %}
+{% comment %} 
         <label for="contactNumber">Contact Number:</label>
-        <input type="tel" pattern="(?:\(?\+977\)?)?[9][6-9]\d{8}|01[-]?[0-9]{7}" id="contactNumber" name="contactDoctor" required>
+        <input type="tel" pattern="(?:\(?\+977\)?)?[9][6-9]\d{8}|01[-]?[0-9]{7}" id="contactNumber" name="contactDoctor" required> {% endcomment %}
 
-
-            <p>(All the information must be correct and proper) </p>
+        <div class="accept-terms">
+            <label style="color: blue; font-style: italic; " for="checkbox">
+            <input style="width: 30px;" type="checkbox" name="checkbox" id="checkbox" required>
+            I accept that all the information provided above are true. If caught to be false, I am ready for any punishment according to the popular law.
+            </label>
+        </div>
             <button type="submit">Submit</button>
         </form>
     </div>

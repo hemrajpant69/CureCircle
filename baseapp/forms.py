@@ -1,5 +1,14 @@
 from django import forms
-from .models import Patient, Doctor
+from .models import *
+from django.contrib.auth.forms import UserCreationForm  
+from django.contrib.auth.models import User
+
+class SignupForm(UserCreationForm):
+
+     class Meta:
+          model = User
+        #   fields = ['username', 'email', 'password1', 'password2', 'name', 'phone', 'gender', 'profile_picture']
+          fields = ['username', 'email', 'password1', 'password2']
 
 # class PatientForm(forms.ModelForm):
 #     class Meta:
@@ -32,3 +41,4 @@ class PatientAndDoctorForm(forms.ModelForm):
         if commit:
             patient_instance.save()
         return patient_instance
+    

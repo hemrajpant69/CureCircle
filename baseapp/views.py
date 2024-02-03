@@ -1,32 +1,78 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
-from django.contrib.auth import authenticate, login
-from .forms import PatientAndDoctorForm
+from django.contrib.auth import authenticate, login, logout
+from .forms import PatientAndDoctorForm, SignupForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+# @login_required(login_url='login_page')
 def home(request):
     if Patient.objects.exists():
         patients=Patient.objects.all()
     else:
         patients = None
-    return render(request, 'baseapp/index.html', {'patients': patients})
+    
+    context = {'patients': patients, 'title': 'Home | CureCircle'}
+    return render(request, 'baseapp/index.html', context )
 
+def signup(request):
+    form = SignupForm()
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+            return redirect('login_page')
+    else:
+            form = SignupForm()
+    
+    context = {'title': 'Sign Up | CureCircle', 'form': form}
+    return render(request, 'baseapp/signup.html', context)
+
+def loginPage(request):
+    if request.method == 'POST':
+        uname = request.POST.get('username')
+        pwd = request.POST.get('password')
+
+        # Authenticate the user
+        user = authenticate(request, username=uname, password=pwd)
+        if(user is not None):
+            login(request, user)
+
+            return redirect('home_page')
+        
+        else:
+            return render(request, 'baseapp/login.html', {'error_message': 'Invalid login credentials'})
+    context = {'title': 'Log in | CureCircle'}
+    return render(request, 'baseapp/login.html', context)
+
+def logoutPage(request):
+    logout(request)
+    return redirect('login_page')
+
+@login_required(login_url='login_page')
 def donate(request):
-    return render(request, 'baseapp/donate.html')
+    context = {'title': 'Donate fund | CureCircle'}
+    return render(request, 'baseapp/donate.html', context)
 
+@login_required(login_url='login_page')
 def requestfund(request):
     doctors = Doctor.objects.all()
-    return render(request, 'baseapp/requestfund.html', {
-        "doctors": doctors
-        })
+    group = Patient.GROUP
+    context = {'title': 'Request for fund | CureCircle', "doctors": doctors, 'group':group}
+    return render(request, 'baseapp/requestfund.html', context)
+
 
 def about(request):
-    return render(request,'baseapp/about.html')
+    context = {'title': 'About | CureCircle'}
+    return render(request,'baseapp/about.html', context)
 
+@login_required(login_url='login_page')
 def requestlanding(request):
-        if request.method=='POST':  
+        if request.method=='POST':
+            p_user = request.user
             p_name=request.POST.get('patientName')
             p_age=request.POST.get('age')
             p_gender=request.POST.get('gender')
@@ -41,17 +87,14 @@ def requestlanding(request):
             p_wrecommend=request.FILES.get('wrecommend')
 
             d_name=request.POST.get('doctorName')
-            d_hospitalname=request.POST.get('hospital')
-            d_phone=request.POST.get('contactDoctor')
-            d_email=request.POST.get('emailDoctor')
-            d_specialization=request.POST.get('specialization')
+            # d_hospitalname=request.POST.get('hospital')
+            # d_phone=request.POST.get('contactDoctor')
+            # d_email=request.POST.get('emailDoctor')
+            # d_specialization=request.POST.get('specialization')
 
-            doctor, created=Doctor.objects.get_or_create(name=d_name, email= d_email, phone= d_phone, hospital= d_hospitalname, specialization= d_specialization)
+            doctor = Doctor.objects.get(name=d_name)
 
-            if created:
-                 doctor.save()
-
-            patient=Patient.objects.create(picture = p_picture, doctor=doctor, name= p_name, email= p_email, phone= p_phone, age= p_age, gender= p_gender, drecommend= p_drecommend, wrecommend= p_wrecommend, fundamount= p_fundamount, bloodgroup= p_bloodgroup, healthissue= p_healthissue, hospitalization_condition= p_hospitalcondition)
+            patient = Patient.objects.create(user= p_user ,picture = p_picture, doctor=doctor, name= p_name, email= p_email, phone= p_phone, age= p_age, gender= p_gender, drecommend= p_drecommend, wrecommend= p_wrecommend, fundamount= p_fundamount, bloodgroup= p_bloodgroup, healthissue= p_healthissue, hospitalization_condition= p_hospitalcondition)
 
             patient.save()
 
@@ -65,12 +108,13 @@ def requestlanding(request):
             # patients.save()
 
             # views.py
+        context = {'title': 'Request received | CureCircle', "patient": patient}
              
-        return render(request, 'baseapp/requestlanding.html')
+        return render(request, 'baseapp/requestlanding.html', context)
 
-
+@login_required(login_url='login_page')
 def donatelanding(request):
-    donordata={}
+    context = {}
     if request.method=="POST":
          name=request.POST.get('donorName')
          email=request.POST.get('donorEmail')
@@ -81,9 +125,17 @@ def donatelanding(request):
          donor, created=Donor.objects.get_or_create(name=name, amount=amount, email=email, phone=phone, bloodgroup=bloodgroup)
          if created:
             donor.save()
-
-         return render(request,'baseapp/donatelanding.html', {'donordata': donor})
+         context = {'title': 'Fund received | CureCircle', 'donordata': donor}
+         return render(request,'baseapp/donatelanding.html', context)
     return render(request, 'baseapp/donatelanding.html')
 
+
 def contact(request):
-    return render(request, 'baseapp/contact.html')
+    context = {'title': 'Contact | CureCircle'}
+    return render(request, 'baseapp/contact.html', context)
+
+@login_required(login_url='login_page')
+def patientPage(request, pk):
+    patient = Patient.objects.get(id=pk)
+    context = {'title': patient.name, 'patient': patient}
+    return render(request, 'baseapp/patient.html', context)

@@ -2,11 +2,18 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth import authenticate, login, logout
-from .forms import PatientAndDoctorForm, SignupForm
+from .forms import SignupForm
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+
+@login_required(login_url = 'login_page')
+def profilePage(request, pk):
+    user = User.objects.get(id=pk)
+    context = {'title': 'User profile', 'user': user}
+    return render(request, 'baseapp/user_profile.html', context)
+
 # @login_required(login_url='login_page')
 def home(request):
     if Patient.objects.exists():

@@ -4,6 +4,7 @@
 {% block style %}
 
 <link href="{% static '/css/style.css'%}" rel="stylesheet">
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 {% endblock style %}
 
@@ -53,40 +54,51 @@
                       <input type="text" id="amount" name="amount" placeholder="1000" required
                           oninput="saveAmountToLocalStorage()">
                   </div> 
-                  
-                  {% comment %} <script>
-                      function saveAmountToLocalStorage() {
-                          const amountInput = document.getElementById("amount");
-                          const amountValue = amountInput.value;
-                  
-                          // Save the amount to localStorage
-                          localStorage.setItem("amount", amountValue);
-                      }
-                  </script> {% endcomment %}
-                  
-        
-                  {% comment %} <div class="input-box">
-                    <label for="transactionCode">Transaction Code:</label>
-                    <input type="text" id="transactionCode" name="transactionCode" placeholder="q4r791stnx1" required>
-                </div> {% endcomment %}
-        
-                </div>
-        
-                {% comment %} <div class="section">
-                    <h2 class="section-title">Payment</h2>
-                    <img src="{% static '/images/scanner.jpg'%}" alt="" class="img-fluid1">
-        
                     
                 </div> {% endcomment %}
-        
-                <button type="submit" class="submit-btn">Pay Via Mobile Banking</button>
+                <button id="payment-button">Pay with Khalti</button>
+                {% comment %} <button type="submit" class="submit-btn">Pay Via Mobile Banking</button> {% endcomment %}
         
                 
         
             </div>
             </form>
         
-            
+            <script>
+                var config = {
+                    // replace the publicKey with yours
+                    "publicKey": "test_public_key_29bb7287d3f74783a428f7a05a509f21",
+                    "productIdentity": "1234567890",
+                    "productName": "Dragon",
+                    "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+                    "paymentPreference": [
+                        "KHALTI",
+                        "EBANKING",
+                        "MOBILE_BANKING",
+                        "CONNECT_IPS",
+                        "SCT",
+                        ],
+                    "eventHandler": {
+                        onSuccess (payload) {
+                            // hit merchant api for initiating verfication
+                            console.log(payload);
+                        },
+                        onError (error) {
+                            console.log(error);
+                        },
+                        onClose () {
+                            console.log('widget is closing');
+                        }
+                    }
+                };
+        
+                var checkout = new KhaltiCheckout(config);
+                var btn = document.getElementById("payment-button");
+                btn.onclick = function () {
+                    // minimum transaction amount must be 10, i.e 1000 in paisa.
+                    checkout.show({amount: 10000});
+                }
+            </script>
         
 {% endblock content%}
 

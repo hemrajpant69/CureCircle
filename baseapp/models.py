@@ -107,7 +107,7 @@ class Patient(models.Model):
     drecommend=models.ImageField(upload_to='drecommend' ,max_length=50, blank=False, null=True)
     wrecommend=models.ImageField(upload_to='wrecommend', max_length=50, blank=False, null=True)
     fundamount=models.PositiveIntegerField(blank=False, null=True)
-    bloodgroup=models.CharField(max_length=20, blank=False, default="Don't know", choices=GROUP)
+    bloodgroup=models.CharField(max_length=20, blank=False, default="Don't know", choices=GROUP, null=True)
     healthissue=models.TextField(blank=False, default=None)
     hospitalization_condition=models.TextField(blank=False, default=None)
     # bloodgroup=models.CharField(max_length=20, choices=GROUP, unique=True)

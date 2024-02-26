@@ -1,6 +1,9 @@
 {% extends "baseapp/main.html" %}
 {% load static %}
-{% block style %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block content %}
 <style>
     body {
         font-family: 'Arial', sans-serif;
@@ -39,9 +42,6 @@
     }
     
 </style>
-{% endblock style %}
-
-{% block content %}
 
 <main>
     <section id="shoutoutSection">
@@ -58,3 +58,5 @@
     {% comment %} <script src="{% static '/js/script.js'%}"></script> {% endcomment %}
 
 {% endblock js %}
+
+{% block footer %}{% endblock footer %}
